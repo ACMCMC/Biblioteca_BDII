@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/aplicacion/FachadaAplicacion.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/ModeloTablaLibros.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/VAutentificacion.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/baseDatos/DAOUsuarios.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/VPrincipal.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/FachadaGui.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/baseDatos/DAOCategorias.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/aplicacion/Libro.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/aplicacion/GesionLibros.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/aplicacion/GestionUsuarios.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/baseDatos/FachadaBaseDatos.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/ModeloTablaEjemplares.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/baseDatos/DAOLibros.java</file>
+            <file>file:/home/alumnogreibd/BDII/Biblioteca/Biblioteca/src/gui/VLibro.java</file>
+        </group>
+    </open-files>
+</project-private>
