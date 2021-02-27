@@ -4,25 +4,25 @@
  */
 
 package gui;
-import aplicacion.Libro;
+import aplicacion.Usuario;
 import javax.swing.table.*;
 /**
  *
  * @author basesdatos
  */
-public class ModeloTablaLibros extends AbstractTableModel{
-    private java.util.List<Libro> libros;
+public class ModeloTablaUsuarios extends AbstractTableModel{
+    private java.util.List<Usuario> usuarios;
 
-    public ModeloTablaLibros(){
-        this.libros=new java.util.ArrayList<Libro>();
+    public ModeloTablaUsuarios(){
+        this.usuarios=new java.util.ArrayList<Usuario>();
     }
 
     public int getColumnCount (){
-        return 5;
+        return 4;
     }
 
     public int getRowCount(){
-        return libros.size();
+        return usuarios.size();
     }
 
     @Override
@@ -31,10 +31,9 @@ public class ModeloTablaLibros extends AbstractTableModel{
 
         switch (col){
             case 0: nombre= "Id"; break;
-            case 1: nombre= "Autores"; break;
-            case 2: nombre="Título"; break;
-            case 3: nombre="Editorial"; break;
-            case 4: nombre="Año"; break;
+            case 1: nombre= "Nombre"; break;
+            case 2: nombre="Email"; break;
+            case 3: nombre="Tipo"; break;
         }
         return nombre;
     }
@@ -47,8 +46,7 @@ public class ModeloTablaLibros extends AbstractTableModel{
             case 0: clase= java.lang.Integer.class; break;
             case 1: clase= java.lang.String.class; break;
             case 2: clase=java.lang.String.class; break;
-            case 3: clase=java.lang.String.class; break;
-            case 4: clase=java.lang.String.class; break;
+            case 3: clase=aplicacion.TipoUsuario.class; break;
         }
         return clase;
     }
@@ -62,22 +60,35 @@ public class ModeloTablaLibros extends AbstractTableModel{
         Object resultado=null;
 
         switch (col){
-            case 0: resultado= libros.get(row).getIdLibro(); break;
-            case 1: resultado= libros.get(row).getAutoresAsString(); break;
-            case 2: resultado=libros.get(row).getTitulo();break;
-            case 3: resultado=libros.get(row).getEditorial(); break;
-            case 4: resultado=libros.get(row).getAno(); break;
+            case 0: resultado= usuarios.get(row).getIdUsuario(); break;
+            case 1: resultado= usuarios.get(row).getNombre(); break;
+            case 2: resultado=usuarios.get(row).getEmail();break;
+            case 3: resultado=usuarios.get(row).getTipoUsuario(); break;
         }
         return resultado;
     }
 
-    public void setFilas(java.util.List<Libro> libros){
-        this.libros=libros;
+    public void setFilas(java.util.List<Usuario> libros){
+        this.usuarios=libros;
         fireTableDataChanged();
     }
 
-    public Libro obtenerLibro(int i){
-        return this.libros.get(i);
+    public Usuario obtenerLibro(int i){
+        return this.usuarios.get(i);
+    }
+
+    public void borrarUsuario(int indice){
+        this.usuarios.remove(indice);
+        fireTableRowsDeleted(indice, indice);
+    }
+
+    public void nuevoUsuario(Usuario u){
+        this.usuarios.add(u);
+        fireTableRowsInserted(this.usuarios.size()-1, this.usuarios.size()-1);
+    }
+
+    public java.util.List<Usuario> getFilas(){
+        return this.usuarios;
     }
 
 }

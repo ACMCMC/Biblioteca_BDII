@@ -31,6 +31,22 @@ public class GestionUsuarios {
       } else return false;
   }
   
- 
+  public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar){
+
+    for (Usuario u:usrs){
+     if (u.getIdUsuario()==null) fbd.insertarUsuario(u);
+     else fbd.modificarUsuario(u);
+    }
+
+    for (String u:borrar){
+        fbd.borrarUsuario(u);
+    }
+
+    return fbd.consultarUsuarios();
+ }
+  
+  public void gestionUsuarios() {
+      fgui.gestionUsuarios();
+  }
   
 }

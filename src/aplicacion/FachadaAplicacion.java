@@ -72,8 +72,12 @@ public Boolean comprobarAutentificacion(String idUsuario, String clave){
   return cu.comprobarAutentificacion(idUsuario, clave);
 }
  
+public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar){
+  return cu.actualizarUsuarios(usrs, borrar);
+}
 
-
-
+public void gestionUsuarios() {
+    cu.gestionUsuarios();
+}
 
 }

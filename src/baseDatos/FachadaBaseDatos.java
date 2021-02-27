@@ -110,6 +110,19 @@ public class FachadaBaseDatos {
         daoLibros.modificarEjemplarLibro(idLibro, ejemplar);
     }
 
+    public void insertarUsuario(Usuario u){
+        daoUsuarios.insertarUsuario(u);
+    }
+    public void borrarUsuario(String id){
+        daoUsuarios.borrarUsuario(id);
+    }
+    public void modificarUsuario(Usuario u){
+        daoUsuarios.modificarUsuario(u);
+    }
+    public java.util.List<Usuario> consultarUsuarios(){
+        return daoUsuarios.consultarUsuarios();
+    }
+
     public Usuario validarUsuario(String idUsuario, String clave){
         return daoUsuarios.validarUsuario(idUsuario, clave);
     }
