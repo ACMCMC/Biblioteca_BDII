@@ -131,4 +131,8 @@ public class FachadaBaseDatos {
         return daoCategorias.consultarCategorias();
     }
 
+    public java.util.List<Usuario> obtenerUsuarios(String id, String nombre){
+        return daoUsuarios.consultarUsuarios(id, nombre);
+    }
+
 }

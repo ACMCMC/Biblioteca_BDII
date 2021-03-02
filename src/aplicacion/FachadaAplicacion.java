@@ -5,7 +5,6 @@
 
 package aplicacion;
 
-
 /**
  *
  * @author basesdatos
@@ -15,69 +14,72 @@ public class FachadaAplicacion {
     baseDatos.FachadaBaseDatos fbd;
     GesionLibros cl;
     GestionUsuarios cu;
-    
-    
- public FachadaAplicacion(){
-   fgui=new gui.FachadaGui(this);
-   fbd= new baseDatos.FachadaBaseDatos(this);
-   cl= new GesionLibros(fgui, fbd);
-   cu= new GestionUsuarios(fgui, fbd);
- }
 
- public static void main(String args[]) {
-     FachadaAplicacion fa;
-     
-     fa= new FachadaAplicacion();
-     fa.iniciaInterfazUsuario();
- }
- 
- public void iniciaInterfazUsuario(){
-     fgui.iniciaVista();
- }
+    public FachadaAplicacion() {
+        fgui = new gui.FachadaGui(this);
+        fbd = new baseDatos.FachadaBaseDatos(this);
+        cl = new GesionLibros(fgui, fbd);
+        cu = new GestionUsuarios(fgui, fbd);
+    }
 
- public void muestraExcepcion(String e){
-     fgui.muestraExcepcion(e);
- }
- 
-public java.util.List<Libro> obtenerLibros(Integer id, String titulo, String isbn, String autor){
-  return cl.obtenerLibros(id, titulo,  isbn,  autor);
-};
+    public static void main(String args[]) {
+        FachadaAplicacion fa;
 
-public void visualizarLibro(Integer idLibro){
- cl.visualizarLibro(idLibro);
-}
+        fa = new FachadaAplicacion();
+        fa.iniciaInterfazUsuario();
+    }
 
-public void nuevoLibro(){
- cl.nuevoLibro();
-}
+    public void iniciaInterfazUsuario() {
+        fgui.iniciaVista();
+    }
 
-public Integer actualizarLibro(Libro l){
-  return cl.actualizarLibro(l);
-}
+    public void muestraExcepcion(String e) {
+        fgui.muestraExcepcion(e);
+    }
 
-public void borrarLibro(Integer idLibro){
-   cl.borrarLibro(idLibro);
-}
+    public java.util.List<Libro> obtenerLibros(Integer id, String titulo, String isbn, String autor) {
+        return cl.obtenerLibros(id, titulo, isbn, autor);
+    };
 
-public void actualizarCategoriasLibro(Integer idLibro, java.util.List<String> categorias){
- cl.actualizarCategoriasLibro(idLibro, categorias);
-}
+    public void visualizarLibro(Integer idLibro) {
+        cl.visualizarLibro(idLibro);
+    }
 
-public java.util.List<Ejemplar> actualizarEjemplaresLibro(Integer idLibro, java.util.List<Ejemplar> ejemplares, java.util.List<Integer> borrar){
-  return cl.actualizarEjemplaresLibro(idLibro, ejemplares, borrar);
-}
+    public void nuevoLibro() {
+        cl.nuevoLibro();
+    }
 
+    public Integer actualizarLibro(Libro l) {
+        return cl.actualizarLibro(l);
+    }
 
-public Boolean comprobarAutentificacion(String idUsuario, String clave){
-  return cu.comprobarAutentificacion(idUsuario, clave);
-}
- 
-public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar){
-  return cu.actualizarUsuarios(usrs, borrar);
-}
+    public void borrarLibro(Integer idLibro) {
+        cl.borrarLibro(idLibro);
+    }
 
-public void gestionUsuarios() {
-    cu.gestionUsuarios();
-}
+    public void actualizarCategoriasLibro(Integer idLibro, java.util.List<String> categorias) {
+        cl.actualizarCategoriasLibro(idLibro, categorias);
+    }
+
+    public java.util.List<Ejemplar> actualizarEjemplaresLibro(Integer idLibro, java.util.List<Ejemplar> ejemplares,
+            java.util.List<Integer> borrar) {
+        return cl.actualizarEjemplaresLibro(idLibro, ejemplares, borrar);
+    }
+
+    public Boolean comprobarAutentificacion(String idUsuario, String clave) {
+        return cu.comprobarAutentificacion(idUsuario, clave);
+    }
+
+    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar) {
+        return cu.actualizarUsuarios(usrs, borrar);
+    }
+
+    public void gestionUsuarios() {
+        cu.gestionUsuarios();
+    }
+
+    public java.util.List<Usuario> obtenerUsuarios(String id, String nombre) {
+        return cu.obtenerUsuarios(id, nombre);
+    };
 
 }

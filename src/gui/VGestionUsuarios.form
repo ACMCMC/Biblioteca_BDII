@@ -332,19 +332,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxTipo">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
-        </Property>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel&lt;TipoUsuario&gt;(new TipoUsuario[] { TipoUsuario.Administrador, TipoUsuario.Normal }));"/>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="VGestionUsuarios_jComboBoxTipo"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;aplicacion.TipoUsuario&gt;"/>
       </AuxValues>
     </Component>
   </SubComponents>
