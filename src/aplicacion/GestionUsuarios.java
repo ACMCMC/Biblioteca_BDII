@@ -32,13 +32,14 @@ public class GestionUsuarios {
             return false;
     }
 
-    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar) {
+    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar, java.util.List<Usuario> usrsInsertar) {
 
         for (Usuario u : usrs) {
-            if (u.getIdUsuario() == null)
-                fbd.insertarUsuario(u);
-            else
                 fbd.modificarUsuario(u);
+        }
+        
+        for (Usuario u : usrsInsertar) {
+                fbd.insertarUsuario(u);
         }
 
         for (String u : borrar) {

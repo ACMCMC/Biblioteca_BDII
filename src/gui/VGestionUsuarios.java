@@ -20,6 +20,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import aplicacion.Ejemplar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,7 @@ public class VGestionUsuarios extends javax.swing.JDialog {
     private java.util.List<String> usuariosBorrados;
     private VPrincipal padre;
     private aplicacion.FachadaAplicacion fa;
-    Usuario uActual;
+    private boolean creandoUsuario;
 
     /** Creates new form VLibro */
     public VGestionUsuarios(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa) {
@@ -52,21 +53,9 @@ public class VGestionUsuarios extends javax.swing.JDialog {
                 // TODO Auto-generated method stub
                 if (lstUsuarios.getSelectedRow() >= 0) {
                     Usuario u = mTablaU.getFilas().get(lstUsuarios.getSelectedRow());
-                textIdAbajo.setText(u.getIdUsuario());
-                textClave.setText(u.getClave());
-                textDireccion.setText(u.getDireccion());
-                textEmail.setText(u.getEmail());
-                textNombreAbajo.setText(u.getNombre());
-                jComboBoxTipo.setSelectedItem(u.getTipoUsuario());
-                textIdAbajo.setEnabled(true);
-                textClave.setEnabled(true);
-                textDireccion.setEnabled(true);
-                textEmail.setEnabled(true);
-                textNombreAbajo.setEnabled(true);
-                jComboBoxTipo.setEnabled(true);
+                    actualizarDatos(u);
                 btnBorrar.setEnabled(true);
                 btnGuardar.setEnabled(true);
-                uActual = u;
                 }
             }
         });
@@ -126,7 +115,7 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         jScrollPane5.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de usuarios");
+        setTitle("Gestión de libros");
         setResizable(false);
 
         btnNuevo.setText("Nuevo");
@@ -184,7 +173,6 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         jLabelIdAbajo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelIdAbajo.setText("Id:");
 
-        textIdAbajo.setEditable(false);
         textIdAbajo.setEnabled(false);
 
         textNombreAbajo.setEnabled(false);
@@ -322,6 +310,7 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         // TODO add your handling code here:
         java.util.List<Usuario> usrs = fa.obtenerUsuarios(textIdArriba.getText(), textNombreArriba.getText());
         ((ModeloTablaUsuarios)lstUsuarios.getModel()).setFilas(usrs);
+        actualizarDatos(new Usuario(null, null, null, null, null, null));
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSalirActionPerformed
@@ -333,23 +322,33 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         // TODO add your handling code here:
         ModeloTablaUsuarios mu;
         Usuario u;
-
+        
         mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
-        u = new Usuario(null, null, null, null, null, null);
-        mu.nuevoUsuario(u);
-        lstUsuarios.setRowSelectionInterval(mu.getRowCount() - 1, mu.getRowCount() - 1);
+        
+        lstUsuarios.setRowSelectionInterval(0, 0);
+        
+        actualizarDatos(new Usuario(null, null, null, null, null, null));
+        creandoUsuario = true;
+
         btnBorrar.setEnabled(true);
     }// GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         java.util.List<Usuario> usrs;
+        java.util.List<Usuario> usrsInsertar = new java.util.ArrayList<Usuario>();
+        
         ModeloTablaUsuarios mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
         usrs = mu.getFilas();
-        Usuario usuarioCambiar = new Usuario(textIdAbajo.getText(), textClave.getText(), textNombreAbajo.getText(),
-                textDireccion.getText(), textEmail.getText(), (TipoUsuario) jComboBoxTipo.getSelectedItem());
-        usrs.set(lstUsuarios.getSelectedRow(), usuarioCambiar);
-        usrs = fa.actualizarUsuarios(usrs, usuariosBorrados);
+        if (creandoUsuario) {
+            usrsInsertar.add(new Usuario(textIdAbajo.getText(), textClave.getText(), textNombreAbajo.getText(),
+                textDireccion.getText(), textEmail.getText(), (TipoUsuario) jComboBoxTipo.getSelectedItem()));
+        } else {
+            usrs.set(lstUsuarios.getSelectedRow(), new Usuario(textIdAbajo.getText(), textClave.getText(), textNombreAbajo.getText(),
+                textDireccion.getText(), textEmail.getText(), (TipoUsuario) jComboBoxTipo.getSelectedItem()));
+        }
+        creandoUsuario = false;
+        usrs = fa.actualizarUsuarios(usrs, usuariosBorrados, usrsInsertar);
         mu.setFilas(usrs);
         if (mu.getRowCount() > 0) {
             lstUsuarios.setRowSelectionInterval(0, 0);
@@ -365,12 +364,30 @@ public class VGestionUsuarios extends javax.swing.JDialog {
             usuariosBorrados.add(mu.obtenerLibro(lstUsuarios.getSelectedRow()).getIdUsuario());
         }
         mu.borrarUsuario(lstUsuarios.getSelectedRow());
+        fa.actualizarUsuarios(mu.getFilas(), usuariosBorrados, new java.util.ArrayList<Usuario>());
+        usuariosBorrados.clear();
         if (mu.getRowCount() == 0) {
             btnBorrar.setEnabled(false);
         } else {
             lstUsuarios.setRowSelectionInterval(0, 0);
         }
     }// GEN-LAST:event_btnBorrarActionPerformed
+    
+    private void actualizarDatos(Usuario u) {
+        creandoUsuario = false;
+        textIdAbajo.setText(u.getIdUsuario());
+                textClave.setText(u.getClave());
+                textDireccion.setText(u.getDireccion());
+                textEmail.setText(u.getEmail());
+                textNombreAbajo.setText(u.getNombre());
+                jComboBoxTipo.setSelectedItem(u.getTipoUsuario());
+                textIdAbajo.setEnabled(true);
+                textClave.setEnabled(true);
+                textDireccion.setEnabled(true);
+                textEmail.setEnabled(true);
+                textNombreAbajo.setEnabled(true);
+                jComboBoxTipo.setEnabled(true);
+    }
 
     /**
      * @param args the command line arguments

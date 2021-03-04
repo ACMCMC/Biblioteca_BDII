@@ -70,8 +70,8 @@ public class FachadaAplicacion {
         return cu.comprobarAutentificacion(idUsuario, clave);
     }
 
-    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar) {
-        return cu.actualizarUsuarios(usrs, borrar);
+    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar, java.util.List<Usuario> usrsInsertar) {
+        return cu.actualizarUsuarios(usrs, borrar, usrsInsertar);
     }
 
     public void gestionUsuarios() {
@@ -81,5 +81,9 @@ public class FachadaAplicacion {
     public java.util.List<Usuario> obtenerUsuarios(String id, String nombre) {
         return cu.obtenerUsuarios(id, nombre);
     };
+    
+    public void insertarUsuario(Usuario u) {
+        this.fbd.insertarUsuario(u);
+    }
 
 }

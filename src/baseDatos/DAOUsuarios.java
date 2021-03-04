@@ -115,12 +115,13 @@ public class DAOUsuarios extends AbstractDAO {
 
         try {
             stat = con.prepareStatement(
-                    "insert into usuario(clave, nombre, direccion, email, tipo_usuario)" + " values (?,?,?,?,?)");
+                    "insert into usuario(clave, nombre, direccion, email, tipo_usuario, id_usuario)" + " values (?,?,?,?,?,?)");
             stat.setString(1, u.getClave());
             stat.setString(2, u.getNombre());
             stat.setString(3, u.getDireccion());
             stat.setString(4, u.getEmail());
             stat.setString(5, u.getTipoUsuario().toString());
+            stat.setString(6, u.getIdUsuario());
             stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
