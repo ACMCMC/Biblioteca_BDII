@@ -360,8 +360,8 @@ public class VGestionUsuarios extends javax.swing.JDialog {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
         ModeloTablaUsuarios mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
-        if (mu.obtenerLibro(lstUsuarios.getSelectedRow()).getIdUsuario() != null) {
-            usuariosBorrados.add(mu.obtenerLibro(lstUsuarios.getSelectedRow()).getIdUsuario());
+        if (mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario() != null) {
+            usuariosBorrados.add(mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario());
         }
         mu.borrarUsuario(lstUsuarios.getSelectedRow());
         fa.actualizarUsuarios(mu.getFilas(), usuariosBorrados, new java.util.ArrayList<Usuario>());

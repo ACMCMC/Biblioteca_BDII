@@ -1,5 +1,7 @@
 package aplicacion;
 
+import java.util.Date;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,51 +13,42 @@ package aplicacion;
  *
  * @author basesdatos
  */
-public class Usuario {
-    private String idUsuario;
-    private String clave;
-    private String nombre;
-    private String direccion;
-    private String email;
-    private TipoUsuario tipo;
+public class Prestamo {
+    private Date fechaPrestamo;
+    private Date fechaDevolucion;
+    private Date fechaVencimiento;
+    private Ejemplar ejemplar;
+    private Usuario usuario;
 
-   public Usuario (String idUsuario, String clave, String nombre, String direccion, String email, TipoUsuario tipo){
-    this.idUsuario=idUsuario;
-    this.clave=clave;
-    this.nombre=nombre;
-    this.direccion=direccion;
-    this.email=email;
-    this.tipo=tipo;
-   }
+    public Prestamo(Date fechaPrestamo, Date fechaDevolucion, Date fechaVencimiento, Ejemplar ejemplar, Usuario usuario) {
+        this.fechaPrestamo = fechaPrestamo;
+        this.fechaDevolucion = fechaDevolucion;
+        this.fechaVencimiento = fechaVencimiento;
+        this.ejemplar = ejemplar;
+        this.usuario = usuario;
+    }
 
-   public String getIdUsuario(){
+    public Date getFechaPrestamo() {
+        return fechaPrestamo;
+    }
 
-       return this.idUsuario;
-   }
+    public Date getFechaDevolucion() {
+        return fechaDevolucion;
+    }
 
-   public String getClave(){
+    public Date getFechaVencimiento() {
+        return fechaVencimiento;
+    }
 
-       return this.clave;
-   }
+    public Ejemplar getEjemplar() {
+        return ejemplar;
+    }
 
-   public String getNombre(){
-
-       return this.nombre;
-   }
-
-   public String getDireccion(){
-
-       return this.direccion;
-   }
-
-   public String getEmail(){
-
-       return this.email;
-   }
-
-   public TipoUsuario getTipoUsuario(){
-
-       return this.tipo;
-   }
-
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    
+    
+    
+    
 }

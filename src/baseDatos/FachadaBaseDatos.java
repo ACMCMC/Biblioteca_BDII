@@ -9,6 +9,7 @@ import aplicacion.Ejemplar;
 import aplicacion.Usuario;
 import aplicacion.Categoria;
 import aplicacion.Libro;
+import aplicacion.Prestamo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class FachadaBaseDatos {
     private DAOLibros daoLibros;
     private DAOCategorias daoCategorias;
     private DAOUsuarios daoUsuarios;
+    private DAOPrestamos daoPrestamos;
 
     public FachadaBaseDatos (aplicacion.FachadaAplicacion fa){
         
@@ -54,6 +56,7 @@ public class FachadaBaseDatos {
             daoLibros = new DAOLibros(conexion, fa);
             daoCategorias = new DAOCategorias(conexion, fa);
             daoUsuarios = new DAOUsuarios(conexion, fa);
+            daoPrestamos = new DAOPrestamos(conexion, fa);
           
 
 
@@ -133,6 +136,10 @@ public class FachadaBaseDatos {
 
     public java.util.List<Usuario> obtenerUsuarios(String id, String nombre){
         return daoUsuarios.consultarUsuarios(id, nombre);
+    }
+    
+    public java.util.List<Prestamo> obtenerPrestamos(Usuario u){
+        return daoPrestamos.consultarPrestamos(u, daoLibros);
     }
 
 }

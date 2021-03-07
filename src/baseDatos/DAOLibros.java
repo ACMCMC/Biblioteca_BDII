@@ -478,4 +478,31 @@ public class DAOLibros extends AbstractDAO {
           try {stmEjemplar.close();} catch (SQLException e){System.out.println("Imposible cerrar cursores");}
         }
   }
+  
+  public Ejemplar consultarEjemplar(Integer idLibro, Integer ejemplar){
+        Ejemplar resultado = null;
+        Connection con;
+        PreparedStatement stmEjemplares=null;
+        ResultSet rsEjemplares;
+
+        con=super.getConexion();
+
+        try {
+        stmEjemplares =con.prepareStatement("select num_ejemplar, ano_compra, localizador "+
+                                                "from ejemplar "+
+                                                "where libro = ?");
+        stmEjemplares.setInt(1,idLibro);
+        rsEjemplares=stmEjemplares.executeQuery();
+        rsEjemplares.next();
+        resultado = new Ejemplar(this.consultarLibro(idLibro), ejemplar, rsEjemplares.getString("localizador"), rsEjemplares.getString("ano_compra"));
+
+        } catch (SQLException e){
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }finally{
+          try {stmEjemplares.close();} catch (SQLException e){System.out.println("Imposible cerrar cursores");}
+        }
+        return resultado;
+    }
+  
 }

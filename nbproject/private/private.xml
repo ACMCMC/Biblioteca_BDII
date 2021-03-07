@@ -10,7 +10,9 @@
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VLibro.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloTablaLibros.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GestionUsuarios.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GestionPrestamos.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/FachadaBaseDatos.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/DAOPrestamos.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloListaStrings.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VPrincipal.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/DAOUsuarios.java</file>
@@ -24,6 +26,7 @@
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/flechaD.jpg</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/TipoUsuario.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/FachadaGui.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Prestamo.java</file>
         </group>
     </open-files>
 </project-private>

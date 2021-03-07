@@ -73,7 +73,7 @@ public class ModeloTablaUsuarios extends AbstractTableModel{
         fireTableDataChanged();
     }
 
-    public Usuario obtenerLibro(int i){
+    public Usuario obtenerUsuario(int i){
         return this.usuarios.get(i);
     }
 
