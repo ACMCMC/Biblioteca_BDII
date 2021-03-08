@@ -1,6 +1,6 @@
 package aplicacion;
 
-import java.util.Date;
+import java.sql.Date;
 
 /*
  * To change this template, choose Tools | Templates
