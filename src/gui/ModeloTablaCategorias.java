@@ -4,17 +4,17 @@
  */
 
 package gui;
-import aplicacion.Ejemplar;
+import aplicacion.Categoria;
 import javax.swing.table.*;
 /**
  *
  * @author basesdatos
  */
-public class ModeloTablaEjemplares extends AbstractTableModel{
-    private java.util.List<Ejemplar> ejemplares;
+public class ModeloTablaCategorias extends AbstractTableModel{
+    private java.util.List<Categoria> categorias;
 
-    public ModeloTablaEjemplares(){
-        this.ejemplares=new java.util.ArrayList<Ejemplar>();
+    public ModeloTablaCategorias(){
+        this.categorias=new java.util.ArrayList<Categoria>();
     }
 
     public int getColumnCount (){
@@ -22,7 +22,7 @@ public class ModeloTablaEjemplares extends AbstractTableModel{
     }
 
     public int getRowCount(){
-        return ejemplares.size();
+        return categorias.size();
     }
 
     @Override
@@ -30,9 +30,7 @@ public class ModeloTablaEjemplares extends AbstractTableModel{
         String nombre="";
 
         switch (col){
-            case 0: nombre= "Id"; break;
-            case 1: nombre= "Localizador"; break;
-            case 2: nombre="Año de compra"; break;
+            case 0: nombre= "Nombre"; break;
         }
         return nombre;
     }
@@ -58,41 +56,31 @@ public class ModeloTablaEjemplares extends AbstractTableModel{
         Object resultado=null;
 
         switch (col){
-            case 0: resultado= ejemplares.get(row).getNumEjemplar(); break;
-            case 1: resultado= ejemplares.get(row).getLocalizador(); break;
-            case 2: resultado=ejemplares.get(row).getAnoCompra();break;
+            case 0: resultado= categorias.get(row).getNombre(); break;
         }
         return resultado;
     }
 
-    @Override
-    public void setValueAt(Object v, int row, int col){
-        switch (col){
-            case 1: ejemplares.get(row).setLocalizador((String) v); break;
-            case 2: ejemplares.get(row).setAnoCompra((String) v);break;
-        }
-    }
-
-    public void setFilas(java.util.List<Ejemplar> ejemplares){
-        this.ejemplares=ejemplares;
+    public void setFilas(java.util.List<Categoria> c){
+        this.categorias=c;
         fireTableDataChanged();
     }
 
-    public void nuevoEjemplar(Ejemplar e){
-        this.ejemplares.add(e);
-        fireTableRowsInserted(this.ejemplares.size()-1, this.ejemplares.size()-1);
+    public void nuevaCategoria(Categoria c){
+        this.categorias.add(c);
+        fireTableRowsInserted(this.categorias.size()-1, this.categorias.size()-1);
     }
 
-    public void borrarEjemplar(int indice){
-        this.ejemplares.remove(indice);
+    public void borrarCategoria(int indice){
+        this.categorias.remove(indice);
         fireTableRowsDeleted(indice, indice);
     }
 
-    public java.util.List<Ejemplar> getFilas(){
-        return this.ejemplares;
+    public java.util.List<Categoria> getFilas(){
+        return this.categorias;
     }
 
-    public Ejemplar obtenerEjemplar(int i){
-        return this.ejemplares.get(i);
+    public Categoria obtenerCategoria(int i){
+        return this.categorias.get(i);
     }
 }

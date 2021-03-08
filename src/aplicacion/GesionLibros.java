@@ -75,4 +75,8 @@ public class GesionLibros{
 
        return fbd.consultarEjemplaresLibro(idLibro);
     }
+    
+    public java.util.List<Libro> consultarLibrosCategoria(Categoria c) {
+        return fbd.consultarLibrosCategoria(c);
+    }
 }

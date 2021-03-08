@@ -60,7 +60,32 @@ public class DAOPrestamos extends AbstractDAO {
                     stat.setDate(2, p.getFechaPrestamo());
                     stat.setInt(3, p.getEjemplar().getLibro().getIdLibro());
                     stat.setString(4, p.getUsuario().getIdUsuario());
-                    stat.setDate(4, p.getFechaDevolucion());
+                    stat.setDate(5, p.getFechaDevolucion());
+            stat.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+
+    public void modificarPrestamo(Prestamo p) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "update prestamo set fecha_devolucion=? where ejemplar=? and fecha_prestamo=? and libro=? and usuario=?");
+                    stat.setDate(1, p.getFechaDevolucion());
+                    stat.setInt(2, p.getEjemplar().getNumEjemplar());
+                    stat.setDate(3, p.getFechaPrestamo());
+                    stat.setInt(4, p.getEjemplar().getLibro().getIdLibro());
+                    stat.setString(5, p.getUsuario().getIdUsuario());
             stat.executeQuery();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

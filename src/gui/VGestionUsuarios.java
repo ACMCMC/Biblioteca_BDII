@@ -361,10 +361,14 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         // TODO add your handling code here:
         ModeloTablaUsuarios mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
         if (mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario() != null) {
-            usuariosBorrados.add(mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario());
+            if (fa.obtenerPrestamos(mu.obtenerUsuario(lstUsuarios.getSelectedRow())).isEmpty()) {
+                usuariosBorrados.add(mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario());
+            } else {
+                fa.muestraExcepcion("No se puede borrar el usuario, tiene préstamos.");
+            }
         }
-        mu.borrarUsuario(lstUsuarios.getSelectedRow());
-        fa.actualizarUsuarios(mu.getFilas(), usuariosBorrados, new java.util.ArrayList<Usuario>());
+        java.util.List<Usuario> usuariosActs = fa.actualizarUsuarios(mu.getFilas(), usuariosBorrados, new java.util.ArrayList<Usuario>());
+        mu.setFilas(usuariosActs);
         usuariosBorrados.clear();
         if (mu.getRowCount() == 0) {
             btnBorrar.setEnabled(false);

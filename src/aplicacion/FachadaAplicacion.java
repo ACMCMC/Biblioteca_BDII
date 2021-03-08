@@ -14,12 +14,14 @@ public class FachadaAplicacion {
     baseDatos.FachadaBaseDatos fbd;
     GesionLibros cl;
     GestionUsuarios cu;
+    GestionCategorias cc;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
         fbd = new baseDatos.FachadaBaseDatos(this);
         cl = new GesionLibros(fgui, fbd);
         cu = new GestionUsuarios(fgui, fbd);
+        cc = new GestionCategorias(fgui, fbd);
     }
 
     public static void main(String args[]) {
@@ -86,4 +88,32 @@ public class FachadaAplicacion {
         this.fbd.insertarUsuario(u);
     }
 
+    
+    public java.util.List<Prestamo> obtenerPrestamos(Usuario u){
+        return fbd.obtenerPrestamos(u);
+    }
+
+    public void insertarPrestamo(Prestamo p){
+        fbd.insertarPrestamo(p);
+    }
+
+    public void modificarPrestamo(Prestamo p){
+        fbd.modificarPrestamo(p);
+    }
+    
+    public void gestionCategorias() {
+        cc.gestionCategorias();
+    }
+    
+    public java.util.List<Categoria> consultarCategorias() {
+        return cc.consultarCategorias();
+    }
+    
+    public java.util.List<Libro> consultarLibrosCategoria(Categoria c) {
+        return cl.consultarLibrosCategoria(c);
+    }
+    
+    public java.util.List<Categoria> actualizarCategorias(java.util.List<Categoria> cats, java.util.List<Categoria> borrar, java.util.List<Categoria> insertar) {
+        return cc.actualizarCategorias(cats, borrar, insertar);
+    }
 }

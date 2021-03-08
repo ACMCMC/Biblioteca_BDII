@@ -505,4 +505,59 @@ public class DAOLibros extends AbstractDAO {
         return resultado;
     }
   
+    public java.util.List<Libro> consultarLibrosCategoria(Categoria c) {
+        java.util.List<Libro> ret = new java.util.ArrayList<Libro>();
+        Libro libroActual;
+        Connection con;
+        PreparedStatement stmCatalogo=null;
+        ResultSet rsCatalogo;
+        PreparedStatement stmAutores=null;
+        ResultSet rsAutores;
+
+        con=this.getConexion();
+        
+        String consulta = "select id_libro, titulo, isbn, editorial, paginas, ano " +
+                                         "from libro as l "+
+                                         "where exists(select * from public.cat_tiene_libro where categoria=? and public.cat_tiene_libro.libro=l.id_libro)";
+        
+
+        try  {
+         stmCatalogo=con.prepareStatement(consulta);
+         stmCatalogo.setString(1, c.getNombre());
+         rsCatalogo=stmCatalogo.executeQuery();
+        while (rsCatalogo.next())
+        {
+            libroActual = new Libro(rsCatalogo.getInt("id_libro"), rsCatalogo.getString("titulo"),
+                                      rsCatalogo.getString("isbn"), rsCatalogo.getString("editorial"),
+                                      rsCatalogo.getInt("paginas"), rsCatalogo.getString("ano"));
+            try {
+            stmAutores = con.prepareStatement("select nombre as autor "+
+                                              "from autor "+
+                                              "where libro = ? "+
+                                              "order by orden");
+            stmAutores.setInt(1, libroActual.getIdLibro());
+            rsAutores=stmAutores.executeQuery();
+            while (rsAutores.next())
+            {
+                 libroActual.addAutor(rsAutores.getString("autor"));
+            }
+            }catch (SQLException e){
+              System.out.println(e.getMessage());
+              this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            } finally {
+              stmAutores.close();
+            }
+            ret.add(libroActual);
+        }
+
+        } catch (SQLException e){
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }finally{
+          try {stmCatalogo.close();} catch (SQLException e){System.out.println("Imposible cerrar cursores");}
+        }
+        
+        return ret;
+    }
+  
 }

@@ -11,6 +11,7 @@
 
 package gui;
 
+import aplicacion.Categoria;
 import aplicacion.Libro;
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
@@ -26,42 +27,39 @@ import javax.swing.JOptionPane;
  *
  * @author basesdatos
  */
-public class VGestionUsuarios extends javax.swing.JDialog {
+public class VGestionCategorias extends javax.swing.JDialog {
 
-    private java.util.List<String> usuariosBorrados;
+    private java.util.List<Categoria> categoriasBorradas;
     private VPrincipal padre;
     private aplicacion.FachadaAplicacion fa;
-    private boolean creandoUsuario;
 
     /** Creates new form VLibro */
-    public VGestionUsuarios(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa) {
+    public VGestionCategorias(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa) {
         super(parent, modal);
         this.fa = fa;
         initComponents();
         padre = (VPrincipal) parent;
-        btnNuevo.setEnabled(true);
-        this.usuariosBorrados = new java.util.ArrayList<String>();
+        btnAnadir.setEnabled(true);
+        this.categoriasBorradas = new java.util.ArrayList<Categoria>();
 
-        ModeloTablaUsuarios mTablaU = new ModeloTablaUsuarios();
-        lstUsuarios.setModel(mTablaU);
+        ModeloTablaCategorias mTablaC = new ModeloTablaCategorias();
+        lstCategorias.setModel(mTablaC);
 
-        mTablaU.setFilas(fa.obtenerUsuarios(textIdArriba.getText(), textNombreArriba.getText()));
-        lstUsuarios.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        lstUsuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        mTablaC.setFilas(fa.consultarCategorias());
+        lstCategorias.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstCategorias.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 // TODO Auto-generated method stub
-                if (lstUsuarios.getSelectedRow() >= 0) {
-                    Usuario u = mTablaU.getFilas().get(lstUsuarios.getSelectedRow());
-                    actualizarDatos(u);
+                if (lstCategorias.getSelectedRow() >= 0) {
+                    Categoria c = mTablaC.getFilas().get(lstCategorias.getSelectedRow());
+                    actualizarDatos(c);
                 btnBorrar.setEnabled(true);
-                btnGuardar.setEnabled(true);
                 }
             }
         });
 
         btnBorrar.setEnabled(false);
-        btnGuardar.setEnabled(false);
     }
 
     /**
@@ -77,29 +75,17 @@ public class VGestionUsuarios extends javax.swing.JDialog {
 
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnNuevo = new javax.swing.JButton();
+        btnAnadir = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
-        jLabelIdArriba = new javax.swing.JLabel();
-        textIdArriba = new javax.swing.JTextField();
-        jLabelNombreArriba = new javax.swing.JLabel();
-        textNombreArriba = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        lstUsuarios = new javax.swing.JTable();
-        jLabelIdAbajo = new javax.swing.JLabel();
-        textIdAbajo = new javax.swing.JTextField();
-        textNombreAbajo = new javax.swing.JTextField();
-        jLabelNombreAbajo = new javax.swing.JLabel();
-        jLabelEmail = new javax.swing.JLabel();
-        jLabelClave = new javax.swing.JLabel();
-        textClave = new javax.swing.JTextField();
-        textEmail = new javax.swing.JTextField();
-        jLabelDireccion = new javax.swing.JLabel();
-        jLabelTipo = new javax.swing.JLabel();
-        textDireccion = new javax.swing.JTextField();
-        jComboBoxTipo = new javax.swing.JComboBox<>();
+        lstCategorias = new javax.swing.JTable();
+        textNombre = new javax.swing.JTextField();
+        labelNombre = new javax.swing.JLabel();
+        labelDesc = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textDesc = new javax.swing.JTextArea();
+        labelCats = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,10 +104,10 @@ public class VGestionUsuarios extends javax.swing.JDialog {
         setTitle("Gestión de libros");
         setResizable(false);
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
+                btnAnadirActionPerformed(evt);
             }
         });
 
@@ -132,13 +118,6 @@ public class VGestionUsuarios extends javax.swing.JDialog {
             }
         });
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,59 +125,41 @@ public class VGestionUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jLabelIdArriba.setText("Id:");
-
-        jLabelNombreArriba.setText("Nombre:");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        lstUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        lstCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Id", "Nombre", "Email", "Tipo"
+                "Categoría"
             }
-        ));
-        jScrollPane6.setViewportView(lstUsuarios);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
 
-        jLabelIdAbajo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelIdAbajo.setText("Id:");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(lstCategorias);
 
-        textIdAbajo.setEnabled(false);
+        textNombre.setEnabled(false);
 
-        textNombreAbajo.setEnabled(false);
+        labelNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelNombre.setText("Nombre:");
 
-        jLabelNombreAbajo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelNombreAbajo.setText("Nombre:");
+        labelDesc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelDesc.setText("Descripción:");
 
-        jLabelEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelEmail.setText("Email:");
+        textDesc.setColumns(20);
+        textDesc.setRows(5);
+        jScrollPane1.setViewportView(textDesc);
 
-        jLabelClave.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelClave.setText("Clave:");
-
-        textClave.setEnabled(false);
-
-        textEmail.setEnabled(false);
-
-        jLabelDireccion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelDireccion.setText("Dirección:");
-
-        jLabelTipo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelTipo.setText("Tipo:");
-
-        textDireccion.setEnabled(false);
-
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<TipoUsuario>(new TipoUsuario[] { TipoUsuario.Administrador, TipoUsuario.Normal }));
+        labelCats.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelCats.setText("Categorías:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,151 +168,74 @@ public class VGestionUsuarios extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCats, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelNombreAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelIdAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textIdAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelClave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textClave))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(textNombreAbajo)
-                                .addGap(73, 73, 73)
-                                .addComponent(textEmail)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textDireccion)
-                            .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelIdArriba)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textIdArriba, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabelNombreArriba)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textNombreArriba)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar))
-                    .addComponent(jScrollPane6)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnBorrar)
-                                .addGap(273, 273, 273)
-                                .addComponent(btnSalir)))))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSalir)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnAnadir)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnBorrar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(textNombre))
+                                .addComponent(labelDesc)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelIdAbajo, jLabelTipo});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelIdArriba)
-                    .addComponent(textIdArriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombreArriba)
-                    .addComponent(textNombreArriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addComponent(labelCats)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelIdAbajo)
-                            .addComponent(textIdAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelClave)
-                            .addComponent(textClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelNombre)
+                            .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelDesc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNombreAbajo)
-                            .addComponent(textNombreAbajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelEmail)
-                            .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnAnadir)
+                            .addComponent(btnBorrar))
+                        .addGap(59, 59, 59)
+                        .addComponent(btnSalir))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTipo)
-                            .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelDireccion)
-                            .addComponent(textDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNuevo)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnBorrar)
-                    .addComponent(btnSalir))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-        java.util.List<Usuario> usrs = fa.obtenerUsuarios(textIdArriba.getText(), textNombreArriba.getText());
-        ((ModeloTablaUsuarios)lstUsuarios.getModel()).setFilas(usrs);
-        actualizarDatos(new Usuario(null, null, null, null, null, null));
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }// GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNuevoActionPerformed
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        ModeloTablaUsuarios mu;
-        Usuario u;
+        java.util.List<Categoria> cats;
+        java.util.List<Categoria> catsInsertar = new java.util.ArrayList<Categoria>();
         
-        mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
+        ModeloTablaCategorias mu = (ModeloTablaCategorias) lstCategorias.getModel();
+        cats = mu.getFilas();
         
-        lstUsuarios.setRowSelectionInterval(0, 0);
+            catsInsertar.add(new Categoria(textNombre.getText(), textDesc.getText()));
         
-        actualizarDatos(new Usuario(null, null, null, null, null, null));
-        creandoUsuario = true;
-
-        btnBorrar.setEnabled(true);
-    }// GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        java.util.List<Usuario> usrs;
-        java.util.List<Usuario> usrsInsertar = new java.util.ArrayList<Usuario>();
-        
-        ModeloTablaUsuarios mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
-        usrs = mu.getFilas();
-        if (creandoUsuario) {
-            usrsInsertar.add(new Usuario(textIdAbajo.getText(), textClave.getText(), textNombreAbajo.getText(),
-                textDireccion.getText(), textEmail.getText(), (TipoUsuario) jComboBoxTipo.getSelectedItem()));
-        } else {
-            usrs.set(lstUsuarios.getSelectedRow(), new Usuario(textIdAbajo.getText(), textClave.getText(), textNombreAbajo.getText(),
-                textDireccion.getText(), textEmail.getText(), (TipoUsuario) jComboBoxTipo.getSelectedItem()));
-        }
-        creandoUsuario = false;
-        usrs = fa.actualizarUsuarios(usrs, usuariosBorrados, usrsInsertar);
-        mu.setFilas(usrs);
+            cats = fa.actualizarCategorias(cats, categoriasBorradas, catsInsertar);
+        mu.setFilas(cats);
         if (mu.getRowCount() > 0) {
-            lstUsuarios.setRowSelectionInterval(0, 0);
+            lstCategorias.setRowSelectionInterval(0, 0);
             btnBorrar.setEnabled(true);
         } else
             btnBorrar.setEnabled(false);
@@ -359,34 +243,32 @@ public class VGestionUsuarios extends javax.swing.JDialog {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
-        ModeloTablaUsuarios mu = (ModeloTablaUsuarios) lstUsuarios.getModel();
-        if (mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario() != null) {
-            usuariosBorrados.add(mu.obtenerUsuario(lstUsuarios.getSelectedRow()).getIdUsuario());
+        ModeloTablaCategorias mu = (ModeloTablaCategorias) lstCategorias.getModel();
+        if (mu.obtenerCategoria(lstCategorias.getSelectedRow()).getNombre()!= null) {
+            if (fa.consultarLibrosCategoria(mu.obtenerCategoria(lstCategorias.getSelectedRow())).isEmpty()) {
+                categoriasBorradas.add(mu.obtenerCategoria(lstCategorias.getSelectedRow()));
+            } else {
+                fa.muestraExcepcion("No se puede borrar la categoría, tiene libros.");
+            }
+            
         }
-        mu.borrarUsuario(lstUsuarios.getSelectedRow());
-        fa.actualizarUsuarios(mu.getFilas(), usuariosBorrados, new java.util.ArrayList<Usuario>());
-        usuariosBorrados.clear();
+        java.util.List<Categoria> catsActs = fa.actualizarCategorias(mu.getFilas(), categoriasBorradas, new java.util.ArrayList<Categoria>());
+        mu.setFilas(catsActs);
+        categoriasBorradas.clear();
         if (mu.getRowCount() == 0) {
             btnBorrar.setEnabled(false);
         } else {
-            lstUsuarios.setRowSelectionInterval(0, 0);
+            lstCategorias.setRowSelectionInterval(0, 0);
         }
     }// GEN-LAST:event_btnBorrarActionPerformed
     
-    private void actualizarDatos(Usuario u) {
-        creandoUsuario = false;
-        textIdAbajo.setText(u.getIdUsuario());
-                textClave.setText(u.getClave());
-                textDireccion.setText(u.getDireccion());
-                textEmail.setText(u.getEmail());
-                textNombreAbajo.setText(u.getNombre());
-                jComboBoxTipo.setSelectedItem(u.getTipoUsuario());
-                textIdAbajo.setEnabled(true);
-                textClave.setEnabled(true);
-                textDireccion.setEnabled(true);
-                textEmail.setEnabled(true);
-                textNombreAbajo.setEnabled(true);
-                jComboBoxTipo.setEnabled(true);
+    private void actualizarDatos(Categoria c) {
+        
+                textNombre.setText(c.getNombre());
+                textNombre.setEnabled(true);
+                textDesc.setText(c.getDescripcion());
+                textDesc.setEnabled(true);
+            
     }
 
     /**
@@ -394,31 +276,19 @@ public class VGestionUsuarios extends javax.swing.JDialog {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<aplicacion.TipoUsuario> jComboBoxTipo;
-    private javax.swing.JLabel jLabelClave;
-    private javax.swing.JLabel jLabelDireccion;
-    private javax.swing.JLabel jLabelEmail;
-    private javax.swing.JLabel jLabelIdAbajo;
-    private javax.swing.JLabel jLabelIdArriba;
-    private javax.swing.JLabel jLabelNombreAbajo;
-    private javax.swing.JLabel jLabelNombreArriba;
-    private javax.swing.JLabel jLabelTipo;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable lstUsuarios;
-    private javax.swing.JTextField textClave;
-    private javax.swing.JTextField textDireccion;
-    private javax.swing.JTextField textEmail;
-    private javax.swing.JTextField textIdAbajo;
-    private javax.swing.JTextField textIdArriba;
-    private javax.swing.JTextField textNombreAbajo;
-    private javax.swing.JTextField textNombreArriba;
+    private javax.swing.JLabel labelCats;
+    private javax.swing.JLabel labelDesc;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JTable lstCategorias;
+    private javax.swing.JTextArea textDesc;
+    private javax.swing.JTextField textNombre;
     // End of variables declaration//GEN-END:variables
 
 }

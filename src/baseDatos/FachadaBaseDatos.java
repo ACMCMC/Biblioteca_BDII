@@ -142,4 +142,26 @@ public class FachadaBaseDatos {
         return daoPrestamos.consultarPrestamos(u, daoLibros);
     }
 
+    public void insertarPrestamo(Prestamo p){
+        daoPrestamos.insertarPrestamo(p);
+    }
+
+    public void modificarPrestamo(Prestamo p){
+        daoPrestamos.modificarPrestamo(p);
+    }
+    
+    public void insertarCategoria(Categoria c){
+        daoCategorias.insertarCategoria(c);
+    }
+    public void borrarCategoria(Categoria c){
+        daoCategorias.borrarCategoria(c);
+    }
+    public void modificarCategoria(Categoria c){
+        daoCategorias.modificarCategoria(c);
+    }
+    
+    public java.util.List<Libro> consultarLibrosCategoria(Categoria c) {
+        return daoLibros.consultarLibrosCategoria(c);
+    }
+
 }

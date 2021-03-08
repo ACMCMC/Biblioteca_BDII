@@ -46,6 +46,72 @@ public class DAOCategorias extends AbstractDAO {
     }
 
 
+    public void insertarCategoria(Categoria c){
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "insert into categoria(nombre, descripcion) values (?,?)");
+                    stat.setString(1, c.getNombre());
+                    stat.setString(2, c.getDescripcion());
+                    
+            stat.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+    public void borrarCategoria(Categoria c){
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "delete from categoria where nombre=?");
+                    stat.setString(1, c.getNombre());
+                    
+                    
+            stat.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+    public void modificarCategoria(Categoria c){
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "update categoria set descripcion=? where nombre=?");
+                    stat.setString(2, c.getNombre());
+                    stat.setString(1, c.getDescripcion());
+                    
+            stat.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
    
 
 }

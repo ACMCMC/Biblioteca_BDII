@@ -12,49 +12,38 @@ import baseDatos.FachadaBaseDatos;
  *
  * @author basesdatos
  */
-public class GestionUsuarios {
+public class GestionCategorias {
 
     FachadaGui fgui;
     FachadaBaseDatos fbd;
 
-    public GestionUsuarios(FachadaGui fgui, FachadaBaseDatos fbd) {
+    public GestionCategorias(FachadaGui fgui, FachadaBaseDatos fbd) {
         this.fgui = fgui;
         this.fbd = fbd;
     }
 
-    public Boolean comprobarAutentificacion(String idUsuario, String clave) {
-        Usuario u;
-
-        u = fbd.validarUsuario(idUsuario, clave);
-        if (u != null) {
-            return u.getTipoUsuario() == TipoUsuario.Administrador;
-        } else
-            return false;
+    public void gestionCategorias() {
+        fgui.gestionCategorias();
     }
-
-    public java.util.List<Usuario> actualizarUsuarios(java.util.List<Usuario> usrs, java.util.List<String> borrar, java.util.List<Usuario> usrsInsertar) {
-
-        for (Usuario u : usrs) {
-                fbd.modificarUsuario(u);
+    
+    public java.util.List<Categoria> consultarCategorias() {
+        return fbd.consultarCategorias();
+    }
+    
+    public java.util.List<Categoria> actualizarCategorias(java.util.List<Categoria> cats, java.util.List<Categoria> borrar, java.util.List<Categoria> insertar) {
+        for (Categoria c : cats) {
+                fbd.modificarCategoria(c);
         }
         
-        for (Usuario u : usrsInsertar) {
-                fbd.insertarUsuario(u);
+        for (Categoria c : insertar) {
+                fbd.insertarCategoria(c);
         }
 
-        for (String u : borrar) {
-            fbd.borrarUsuario(u);
+        for (Categoria c : borrar) {
+            fbd.borrarCategoria(c);
         }
-
-        return fbd.consultarUsuarios();
-    }
-
-    public void gestionUsuarios() {
-        fgui.gestionUsuarios();
-    }
-
-    public java.util.List<Usuario> obtenerUsuarios(String id, String nombre) {
-        return fbd.obtenerUsuarios(id, nombre);
+        
+        return fbd.consultarCategorias();
     }
 
 }

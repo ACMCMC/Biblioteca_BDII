@@ -62,6 +62,9 @@ public class FachadaGui {
         vg.setVisible(true);
     }
 
-    
+    public void gestionCategorias() {
+        VGestionCategorias vg = new VGestionCategorias(vp, true, fa);
+        vg.setVisible(true);
+    }
    
 }
