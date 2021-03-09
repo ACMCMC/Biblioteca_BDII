@@ -4,90 +4,116 @@
  */
 
 package gui;
+
 import aplicacion.Usuario;
 import javax.swing.table.*;
+
 /**
  *
  * @author basesdatos
  */
-public class ModeloTablaUsuarios extends AbstractTableModel{
+public class ModeloTablaUsuarios extends AbstractTableModel {
     private java.util.List<Usuario> usuarios;
 
-    public ModeloTablaUsuarios(){
-        this.usuarios=new java.util.ArrayList<Usuario>();
+    public ModeloTablaUsuarios() {
+        this.usuarios = new java.util.ArrayList<Usuario>();
     }
 
-    public int getColumnCount (){
+    public int getColumnCount() {
         return 4;
     }
 
-    public int getRowCount(){
+    public int getRowCount() {
         return usuarios.size();
     }
 
     @Override
-    public String getColumnName(int col){
-        String nombre="";
+    public String getColumnName(int col) {
+        String nombre = "";
 
-        switch (col){
-            case 0: nombre= "Id"; break;
-            case 1: nombre= "Nombre"; break;
-            case 2: nombre="Email"; break;
-            case 3: nombre="Tipo"; break;
+        switch (col) {
+        case 0:
+            nombre = "Id";
+            break;
+        case 1:
+            nombre = "Nombre";
+            break;
+        case 2:
+            nombre = "Email";
+            break;
+        case 3:
+            nombre = "Tipo";
+            break;
         }
         return nombre;
     }
 
     @Override
-    public Class getColumnClass(int col){
-        Class clase=null;
+    public Class getColumnClass(int col) {
+        Class clase = null;
 
-        switch (col){
-            case 0: clase= java.lang.Integer.class; break;
-            case 1: clase= java.lang.String.class; break;
-            case 2: clase=java.lang.String.class; break;
-            case 3: clase=aplicacion.TipoUsuario.class; break;
+        switch (col) {
+        case 0:
+            clase = java.lang.Integer.class;
+            break;
+        case 1:
+            clase = java.lang.String.class;
+            break;
+        case 2:
+            clase = java.lang.String.class;
+            break;
+        case 3:
+            clase = aplicacion.TipoUsuario.class;
+            break;
         }
         return clase;
     }
 
     @Override
-    public boolean isCellEditable(int row, int col){
+    public boolean isCellEditable(int row, int col) {
         return false;
     }
 
-    public Object getValueAt(int row, int col){
-        Object resultado=null;
+    public Object getValueAt(int row, int col) {
+        Object resultado = null;
 
-        switch (col){
-            case 0: resultado= usuarios.get(row).getIdUsuario(); break;
-            case 1: resultado= usuarios.get(row).getNombre(); break;
-            case 2: resultado=usuarios.get(row).getEmail();break;
-            case 3: resultado=usuarios.get(row).getTipoUsuario(); break;
+        switch (col) {
+        case 0:
+            resultado = usuarios.get(row).getIdUsuario();
+            break;
+        case 1:
+            resultado = usuarios.get(row).getNombre();
+            break;
+        case 2:
+            resultado = usuarios.get(row).getEmail();
+            break;
+        case 3:
+            resultado = usuarios.get(row).getTipoUsuario();
+            break;
         }
         return resultado;
     }
 
-    public void setFilas(java.util.List<Usuario> usrs){
-        this.usuarios=usrs;
+    public void setFilas(java.util.List<Usuario> usrs) {
+        this.usuarios = usrs;
         fireTableDataChanged();
     }
 
-    public Usuario obtenerUsuario(int i){
+    public Usuario obtenerUsuario(int i) {
         return this.usuarios.get(i);
     }
 
-    public void borrarUsuario(int indice){
+    public void borrarUsuario(int indice) {
         this.usuarios.remove(indice);
         fireTableRowsDeleted(indice, indice);
     }
 
-    public void nuevoUsuario(Usuario u){
+    public void nuevoUsuario(Usuario u) {
         this.usuarios.add(u);
-        fireTableRowsInserted(this.usuarios.size()-1, this.usuarios.size()-1);
+        fireTableRowsInserted(this.usuarios.size() - 1, this.usuarios.size() - 1);
     }
 
-    public java.util.List<Usuario> getFilas(){
+    public java.util.List<Usuario> getFilas() {
         return this.usuarios;
     }
 

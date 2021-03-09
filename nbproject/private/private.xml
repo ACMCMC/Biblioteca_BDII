@@ -7,14 +7,17 @@
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VAutentificacion.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GestionUsuarios.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GestionPrestamos.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloTablaCategorias.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/FachadaBaseDatos.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Ejemplar.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloListaStrings.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/DAOUsuarios.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloTablaEjemplares.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VAviso.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GestionCategorias.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/flechaD.jpg</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/TipoUsuario.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Categoria.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/FachadaGui.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Prestamo.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Usuario.java</file>
@@ -26,6 +29,7 @@
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VGestionUsuarios.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/DAOCategorias.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/ModeloTablaUsuarios.java</file>
+            <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/gui/VGestionCategorias.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/Libro.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/aplicacion/GesionLibros.java</file>
             <file>file:/Users/acmc/Repos/Biblioteca_BDII/src/baseDatos/DAOLibros.java</file>
