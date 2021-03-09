@@ -5,6 +5,7 @@
 
 package baseDatos;
 import aplicacion.Categoria;
+import aplicacion.Libro;
 import java.sql.*;
 /**
  *
@@ -56,7 +57,7 @@ public class DAOCategorias extends AbstractDAO {
                     stat.setString(1, c.getNombre());
                     stat.setString(2, c.getDescripcion());
                     
-            stat.executeQuery();
+            stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
@@ -78,7 +79,7 @@ public class DAOCategorias extends AbstractDAO {
                     stat.setString(1, c.getNombre());
                     
                     
-            stat.executeQuery();
+            stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
@@ -100,7 +101,53 @@ public class DAOCategorias extends AbstractDAO {
                     stat.setString(2, c.getNombre());
                     stat.setString(1, c.getDescripcion());
                     
-            stat.executeQuery();
+            stat.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+    
+    public void anadirCategoriaLibro(int l, String c) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "insert into public.cat_tiene_libro(categoria, libro) values (?,?)");
+                    stat.setString(1, c);
+                    stat.setInt(2, l);
+                    
+            stat.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+    
+    public void quitarCategoriaLibro(int l, String c) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "delete from public.cat_tiene_libro where categoria=? and libro=?");
+                    stat.setString(1, c);
+                    stat.setInt(2, l);
+                    
+            stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());

@@ -496,6 +496,7 @@ public class VLibro extends javax.swing.JDialog {
      mRC = (ModeloListaStrings) lstRestoCategorias.getModel();
      mC = (ModeloListaStrings) lstCategoriasLibro.getModel();
      mC.nuevoElemento(mRC.getElementAt(lstRestoCategorias.getSelectedIndex()));
+     //fa.anadirCategoriaLibro(idLibro, mRC.getElementAt(lstRestoCategorias.getSelectedIndex()));
      mRC.borrarElemento(lstRestoCategorias.getSelectedIndex());
      if (mRC.getSize()==0) btnDerecha.setEnabled(false);
      else lstRestoCategorias.setSelectedIndex(0);
@@ -511,7 +512,9 @@ public class VLibro extends javax.swing.JDialog {
      mRC = (ModeloListaStrings) lstRestoCategorias.getModel();
      mC = (ModeloListaStrings) lstCategoriasLibro.getModel();
      mRC.nuevoElemento(mC.getElementAt(lstCategoriasLibro.getSelectedIndex()));
+     //fa.quitarCategoriaLibro(idLibro, mC.getElementAt(lstCategoriasLibro.getSelectedIndex()));
      mC.borrarElemento(lstCategoriasLibro.getSelectedIndex());
+     
      if (mC.getSize()==0) btnIzquierda.setEnabled(false);
      else lstCategoriasLibro.setSelectedIndex(0);
      lstRestoCategorias.setSelectedIndex(mRC.getSize()-1);

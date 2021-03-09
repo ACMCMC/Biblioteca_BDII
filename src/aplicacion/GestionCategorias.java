@@ -45,5 +45,13 @@ public class GestionCategorias {
         
         return fbd.consultarCategorias();
     }
+    
+    public void anadirCategoriaLibro(int l, String c) {
+        fbd.anadirCategoriaLibro(l, c);
+    }
+    
+    public void quitarCategoriaLibro(int l, String c) {
+        fbd.quitarCategoriaLibro(l, c);
+    }
 
 }

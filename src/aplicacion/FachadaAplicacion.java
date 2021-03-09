@@ -116,4 +116,12 @@ public class FachadaAplicacion {
     public java.util.List<Categoria> actualizarCategorias(java.util.List<Categoria> cats, java.util.List<Categoria> borrar, java.util.List<Categoria> insertar) {
         return cc.actualizarCategorias(cats, borrar, insertar);
     }
+    
+    public void anadirCategoriaLibro(int l, String c) {
+        cc.anadirCategoriaLibro(l, c);
+    }
+    
+    public void quitarCategoriaLibro(int l, String c) {
+        cc.quitarCategoriaLibro(l, c);
+    }
 }

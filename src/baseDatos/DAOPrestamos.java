@@ -61,7 +61,7 @@ public class DAOPrestamos extends AbstractDAO {
                     stat.setInt(3, p.getEjemplar().getLibro().getIdLibro());
                     stat.setString(4, p.getUsuario().getIdUsuario());
                     stat.setDate(5, p.getFechaDevolucion());
-            stat.executeQuery();
+            stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
@@ -86,7 +86,7 @@ public class DAOPrestamos extends AbstractDAO {
                     stat.setDate(3, p.getFechaPrestamo());
                     stat.setInt(4, p.getEjemplar().getLibro().getIdLibro());
                     stat.setString(5, p.getUsuario().getIdUsuario());
-            stat.executeQuery();
+            stat.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());

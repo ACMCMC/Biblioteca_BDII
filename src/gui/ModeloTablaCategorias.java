@@ -18,7 +18,7 @@ public class ModeloTablaCategorias extends AbstractTableModel{
     }
 
     public int getColumnCount (){
-        return 3;
+        return 1;
     }
 
     public int getRowCount(){
@@ -40,9 +40,8 @@ public class ModeloTablaCategorias extends AbstractTableModel{
         Class clase=null;
 
         switch (col){
-            case 0: clase= java.lang.Integer.class; break;
-            case 1: clase= java.lang.String.class; break;
-            case 2: clase=java.lang.String.class; break;
+            case 0: clase= aplicacion.Categoria.class; break;
+            
         }
         return clase;
     }

@@ -163,5 +163,13 @@ public class FachadaBaseDatos {
     public java.util.List<Libro> consultarLibrosCategoria(Categoria c) {
         return daoLibros.consultarLibrosCategoria(c);
     }
+    
+    public void anadirCategoriaLibro(int l, String c) {
+        daoCategorias.anadirCategoriaLibro(l, c);
+    }
+    
+    public void quitarCategoriaLibro(int l, String c) {
+        daoCategorias.quitarCategoriaLibro(l, c);
+    }
 
 }
