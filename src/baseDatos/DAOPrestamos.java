@@ -5,6 +5,8 @@
 
 package baseDatos;
 
+import aplicacion.Ejemplar;
+import aplicacion.Libro;
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 import aplicacion.Prestamo;
@@ -35,6 +37,32 @@ public class DAOPrestamos extends AbstractDAO {
             ResultSet res = stat.executeQuery();
             while (res.next()) {
                 resultado.add(new Prestamo(res.getDate(1), res.getDate(2), res.getDate(3), daoLibros.consultarEjemplar(res.getInt(4), res.getInt(5)), u));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
+    }
+    
+    public List<Prestamo> consultarPrestamos(Libro l, DAOLibros daoLibros, DAOUsuarios daoUsuarios) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+        List<Prestamo> resultado = new ArrayList<Prestamo>();
+
+        try {
+            stat = con.prepareStatement(
+                    "select prestamo.fecha_prestamo, prestamo.fecha_devolucion, public.get_fecha_vencimiento(prestamo.fecha_prestamo), prestamo.ejemplar, prestamo.libro, prestamo.usuario FROM prestamo WHERE prestamo.libro=?");
+                    stat.setInt(1, l.getIdLibro());
+            ResultSet res = stat.executeQuery();
+            while (res.next()) {
+                resultado.add(new Prestamo(res.getDate(1), res.getDate(2), res.getDate(3), daoLibros.consultarEjemplar(res.getInt(4), res.getInt(5)), daoUsuarios.consultarUsuarios(res.getString(6), null).get(0)));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,6 +125,41 @@ public class DAOPrestamos extends AbstractDAO {
                 System.out.println("Imposible cerrar cursores");
             }
         }
+    }
+    
+    public void devolverPrestamo(Prestamo p) {
+        p = new Prestamo(p.getFechaPrestamo(), new java.sql.Date(System.currentTimeMillis()), p.getFechaVencimiento(), p.getEjemplar(), p.getUsuario());
+        this.modificarPrestamo(p);
+    }
+    
+    public Prestamo getPrestamoActualEjemplar(Ejemplar ej, DAOUsuarios daoUsuarios) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+        Prestamo resultado = null;
+
+        try {
+            stat = con.prepareStatement(
+                    "select prestamo.fecha_prestamo, prestamo.fecha_devolucion, public.get_fecha_vencimiento(prestamo.fecha_prestamo), prestamo.ejemplar, prestamo.libro, prestamo.usuario FROM prestamo WHERE prestamo.libro=? and prestamo.ejemplar=? and prestamo.fecha_devolucion is null");
+                    stat.setInt(1, ej.getLibro().getIdLibro());
+                    stat.setInt(2, ej.getNumEjemplar());
+            ResultSet res = stat.executeQuery();
+            if (res.next()) {
+                String s = res.getString(6);
+                java.util.List<Usuario> u = daoUsuarios.consultarUsuarios(res.getString(6), null);
+                
+                resultado = new Prestamo(res.getDate(1), res.getDate(2), res.getDate(3), ej, daoUsuarios.consultarUsuarios(res.getString(6), null).get(0));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
     }
 
 }

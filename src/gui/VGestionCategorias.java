@@ -146,8 +146,6 @@ public class VGestionCategorias extends javax.swing.JDialog {
         });
         jScrollPane6.setViewportView(lstCategorias);
 
-        textNombre.setEnabled(false);
-
         labelNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelNombre.setText("Nombre:");
 

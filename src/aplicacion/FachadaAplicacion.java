@@ -15,6 +15,7 @@ public class FachadaAplicacion {
     GesionLibros cl;
     GestionUsuarios cu;
     GestionCategorias cc;
+    GestionPrestamos cp;
 
     public FachadaAplicacion() {
         fgui = new gui.FachadaGui(this);
@@ -22,6 +23,7 @@ public class FachadaAplicacion {
         cl = new GesionLibros(fgui, fbd);
         cu = new GestionUsuarios(fgui, fbd);
         cc = new GestionCategorias(fgui, fbd);
+        cp = new GestionPrestamos(fgui, fbd);
     }
 
     public static void main(String args[]) {
@@ -90,7 +92,11 @@ public class FachadaAplicacion {
 
     
     public java.util.List<Prestamo> obtenerPrestamos(Usuario u){
-        return fbd.obtenerPrestamos(u);
+        return cp.obtenerPrestamos(u);
+    }
+    
+    public java.util.List<Prestamo> obtenerPrestamos(int libro){
+        return cp.obtenerPrestamos(cl.obtenerLibros(libro, null, null, null).get(0));
     }
 
     public void insertarPrestamo(Prestamo p){
@@ -124,4 +130,13 @@ public class FachadaAplicacion {
     public void quitarCategoriaLibro(int l, String c) {
         cc.quitarCategoriaLibro(l, c);
     }
+    
+    public void devolverPrestamo(Prestamo e) {
+        cp.devolverPrestamo(e);
+    }
+    
+    public java.util.Map<Ejemplar, Prestamo> getPrestamosActualesEjemplares(java.util.List<Ejemplar> ejs) {
+        return cp.getPrestamosActualesEjemplares(ejs);
+    }
+    
 }

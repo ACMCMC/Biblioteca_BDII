@@ -183,9 +183,6 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="textNombre">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelNombre">
       <Properties>

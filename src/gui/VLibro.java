@@ -86,9 +86,10 @@ public class VLibro extends javax.swing.JDialog {
             btnIzquierda.setEnabled(true);
         } else btnIzquierda.setEnabled(false);
 
-        ModeloTablaEjemplares mTEjemplares = new ModeloTablaEjemplares();
+        ModeloTablaPrestamos mTEjemplares = new ModeloTablaPrestamos();
         tablaEjemplares.setModel(mTEjemplares);
-        mTEjemplares.setFilas(libro.getEjemplares());
+        java.util.List<Ejemplar> ejs = libro.getEjemplares();
+        mTEjemplares.setFilas(ejs, fa.getPrestamosActualesEjemplares(ejs));
         if (mTEjemplares.getRowCount()>0) {
             tablaEjemplares.setRowSelectionInterval(0, 0);
             btnBorrarEjemplar.setEnabled(true);
@@ -143,6 +144,8 @@ public class VLibro extends javax.swing.JDialog {
         btnBorrarEjemplar = new javax.swing.JButton();
         btnNuevoEjemplar = new javax.swing.JButton();
         btnActualizarEjemplaresLibro = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         btnBorrarLibro = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
@@ -202,7 +205,7 @@ public class VLibro extends javax.swing.JDialog {
                     .addGroup(panelGeneralAutoresLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
+                        .addComponent(textoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))
                     .addGroup(panelGeneralAutoresLayout.createSequentialGroup()
                         .addGroup(panelGeneralAutoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelGeneralAutoresLayout.createSequentialGroup()
@@ -221,12 +224,12 @@ public class VLibro extends javax.swing.JDialog {
                                 .addComponent(textoAno)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelGeneralAutoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoEditorial, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(textoEditorial, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                             .addGroup(panelGeneralAutoresLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textoId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 91, Short.MAX_VALUE))))
+                                .addGap(0, 161, Short.MAX_VALUE))))
                     .addComponent(jLabel7)
                     .addGroup(panelGeneralAutoresLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,7 +239,7 @@ public class VLibro extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelGeneralAutoresLayout.createSequentialGroup()
                                 .addComponent(btnNuevoAutor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textoNuevoAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                                .addComponent(textoNuevoAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
                             .addComponent(btnActualizarLibro))))
                 .addContainerGap())
         );
@@ -321,7 +324,7 @@ public class VLibro extends javax.swing.JDialog {
                         .addComponent(jLabel8))
                     .addGroup(panelCategoriasLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelCategoriasLayout.createSequentialGroup()
@@ -335,7 +338,7 @@ public class VLibro extends javax.swing.JDialog {
                         .addComponent(jLabel9)
                         .addGap(65, 65, 65))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCategoriasLayout.createSequentialGroup()
-                .addContainerGap(383, Short.MAX_VALUE)
+                .addContainerGap(407, Short.MAX_VALUE)
                 .addComponent(btnActualizarCategoriasLibro)
                 .addContainerGap())
         );
@@ -364,7 +367,7 @@ public class VLibro extends javax.swing.JDialog {
 
         panelLibro.addTab("Categorías", panelCategorias);
 
-        tablaEjemplares.setModel(new ModeloTablaEjemplares());
+        tablaEjemplares.setModel(new ModeloTablaPrestamos());
         jScrollPane4.setViewportView(tablaEjemplares);
 
         btnBorrarEjemplar.setText("Borrar");
@@ -388,29 +391,45 @@ public class VLibro extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("Prestar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Devolver");
+        jButton2.setToolTipText("");
+
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
         panelEjemplares.setLayout(panelEjemplaresLayout);
         panelEjemplaresLayout.setHorizontalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnNuevoEjemplar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBorrarEjemplar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizarEjemplaresLibro)
-                .addGap(24, 24, 24))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelEjemplaresLayout.setVerticalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEjemplaresLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevoEjemplar)
                     .addComponent(btnBorrarEjemplar)
-                    .addComponent(btnActualizarEjemplaresLibro))
+                    .addComponent(btnActualizarEjemplaresLibro)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(24, 24, 24))
         );
 
@@ -437,7 +456,7 @@ public class VLibro extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBorrarLibro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -523,10 +542,10 @@ public class VLibro extends javax.swing.JDialog {
 
     private void btnNuevoEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEjemplarActionPerformed
         // TODO add your handling code here:
-        ModeloTablaEjemplares me;
+        ModeloTablaPrestamos me;
         Ejemplar e;
 
-        me=(ModeloTablaEjemplares) tablaEjemplares.getModel();
+        me=(ModeloTablaPrestamos) tablaEjemplares.getModel();
         e=new Ejemplar(null, null, null, null);
         me.nuevoEjemplar(e);
         tablaEjemplares.setRowSelectionInterval(me.getRowCount()-1, me.getRowCount()-1);
@@ -536,8 +555,8 @@ public class VLibro extends javax.swing.JDialog {
 
     private void btnBorrarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarEjemplarActionPerformed
         // TODO add your handling code here:
-     ModeloTablaEjemplares me;
-     me=(ModeloTablaEjemplares) tablaEjemplares.getModel();
+     ModeloTablaPrestamos me;
+     me=(ModeloTablaPrestamos) tablaEjemplares.getModel();
      if (me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar()!=null)
          ejemplaresBorrados.add(me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar());
      me.borrarEjemplar(tablaEjemplares.getSelectedRow());
@@ -575,14 +594,18 @@ public class VLibro extends javax.swing.JDialog {
     private void btnActualizarEjemplaresLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEjemplaresLibroActionPerformed
         // TODO add your handling code here:
       java.util.List<Ejemplar> ejemplares;
-      ModeloTablaEjemplares me= (ModeloTablaEjemplares)tablaEjemplares.getModel();
+      ModeloTablaPrestamos me= (ModeloTablaPrestamos)tablaEjemplares.getModel();
       ejemplares=fa.actualizarEjemplaresLibro(idLibro, me.getFilas(), ejemplaresBorrados);
-      me.setFilas(ejemplares);
+      me.setFilas(ejemplares, fa.getPrestamosActualesEjemplares(ejemplares));
       if (me.getRowCount()>0) {
             tablaEjemplares.setRowSelectionInterval(0, 0);
             btnBorrarEjemplar.setEnabled(true);
         } else btnBorrarEjemplar.setEnabled(false);
     }//GEN-LAST:event_btnActualizarEjemplaresLibroActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -600,6 +623,8 @@ public class VLibro extends javax.swing.JDialog {
     private javax.swing.JButton btnNuevoAutor;
     private javax.swing.JButton btnNuevoEjemplar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

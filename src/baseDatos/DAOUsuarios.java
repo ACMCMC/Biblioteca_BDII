@@ -171,8 +171,10 @@ public class DAOUsuarios extends AbstractDAO {
         try {
             stat = con.prepareStatement(
                     "select id_usuario, clave, nombre, direccion, email, tipo_usuario from usuario where nombre like ? and id_usuario like ?");
-                    stat.setString(1, "%" + nombre + "%");
-                    stat.setString(2, "%" + id + "%");
+                    stat.setString(1, "%" + (nombre!=null?nombre:"") + "%");
+                    stat.setString(2, "%" + (id!=null?id:"") + "%");
+                    String s = "%" + (nombre!=null?nombre:"") + "%";
+                    String s2 = "%" + (id!=null?id:"") + "%";
             ResultSet res = stat.executeQuery();
             while (res.next()) {
                 resultado.add(new Usuario(res.getString("id_usuario"), res.getString("clave"), res.getString("nombre"),
