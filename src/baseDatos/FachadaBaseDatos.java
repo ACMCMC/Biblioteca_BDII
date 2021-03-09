@@ -182,4 +182,8 @@ public class FachadaBaseDatos {
     public Prestamo getPrestamoActualEjemplar(Ejemplar ej) {
         return daoPrestamos.getPrestamoActualEjemplar(ej, daoUsuarios);
     }
+    
+    public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
+        return daoPrestamos.getPrestamosEjemplar(ej, daoUsuarios);
+    }
 }

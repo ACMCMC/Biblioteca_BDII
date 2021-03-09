@@ -139,4 +139,8 @@ public class FachadaAplicacion {
         return cp.getPrestamosActualesEjemplares(ejs);
     }
     
+    public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
+        return cp.getPrestamosEjemplar(ej);
+    }
+    
 }

@@ -58,4 +58,11 @@ public class Usuario {
        return this.tipo;
    }
 
+    @Override
+    public String toString() {
+        return idUsuario;
+    }
+   
+   
+
 }

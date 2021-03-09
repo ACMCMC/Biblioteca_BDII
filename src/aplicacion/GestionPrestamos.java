@@ -41,5 +41,9 @@ public class GestionPrestamos {
         }
         return mapa;
     }
+    
+    public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
+        return fbd.getPrestamosEjemplar(ej);
+    }
 
 }

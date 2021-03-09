@@ -440,9 +440,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBorrarEjemplar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="btnPrestar" min="-2" pref="85" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="btnDevolver" min="-2" pref="85" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnActualizarEjemplaresLibro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -458,8 +458,8 @@
                           <Component id="btnNuevoEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBorrarEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnActualizarEjemplaresLibro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPrestar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDevolver" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
@@ -477,7 +477,7 @@
                 <Component class="javax.swing.JTable" name="tablaEjemplares">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new gui.ModeloTablaPrestamos()" type="code"/>
+                      <Connection code="new gui.ModeloTablaEjemplares()" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0"/>
@@ -513,19 +513,22 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarEjemplaresLibroActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnPrestar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Prestar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrestarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnDevolver">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Devolver"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDevolverActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -13,6 +13,7 @@ package gui;
 
 import aplicacion.Libro;
 import aplicacion.Ejemplar;
+import aplicacion.Prestamo;
 
 /**
  *
@@ -86,7 +87,7 @@ public class VLibro extends javax.swing.JDialog {
             btnIzquierda.setEnabled(true);
         } else btnIzquierda.setEnabled(false);
 
-        ModeloTablaPrestamos mTEjemplares = new ModeloTablaPrestamos();
+        ModeloTablaEjemplares mTEjemplares = new ModeloTablaEjemplares();
         tablaEjemplares.setModel(mTEjemplares);
         java.util.List<Ejemplar> ejs = libro.getEjemplares();
         mTEjemplares.setFilas(ejs, fa.getPrestamosActualesEjemplares(ejs));
@@ -144,8 +145,8 @@ public class VLibro extends javax.swing.JDialog {
         btnBorrarEjemplar = new javax.swing.JButton();
         btnNuevoEjemplar = new javax.swing.JButton();
         btnActualizarEjemplaresLibro = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPrestar = new javax.swing.JButton();
+        btnDevolver = new javax.swing.JButton();
         btnBorrarLibro = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
@@ -367,7 +368,7 @@ public class VLibro extends javax.swing.JDialog {
 
         panelLibro.addTab("Categorías", panelCategorias);
 
-        tablaEjemplares.setModel(new ModeloTablaPrestamos());
+        tablaEjemplares.setModel(new gui.ModeloTablaEjemplares());
         jScrollPane4.setViewportView(tablaEjemplares);
 
         btnBorrarEjemplar.setText("Borrar");
@@ -391,15 +392,20 @@ public class VLibro extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Prestar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPrestar.setText("Prestar");
+        btnPrestar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPrestarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Devolver");
-        jButton2.setToolTipText("");
+        btnDevolver.setText("Devolver");
+        btnDevolver.setToolTipText("");
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
         panelEjemplares.setLayout(panelEjemplaresLayout);
@@ -412,9 +418,9 @@ public class VLibro extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBorrarEjemplar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPrestar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnActualizarEjemplaresLibro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -428,8 +434,8 @@ public class VLibro extends javax.swing.JDialog {
                     .addComponent(btnNuevoEjemplar)
                     .addComponent(btnBorrarEjemplar)
                     .addComponent(btnActualizarEjemplaresLibro)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnPrestar)
+                    .addComponent(btnDevolver))
                 .addGap(24, 24, 24))
         );
 
@@ -542,10 +548,10 @@ public class VLibro extends javax.swing.JDialog {
 
     private void btnNuevoEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEjemplarActionPerformed
         // TODO add your handling code here:
-        ModeloTablaPrestamos me;
+        ModeloTablaEjemplares me;
         Ejemplar e;
 
-        me=(ModeloTablaPrestamos) tablaEjemplares.getModel();
+        me=(ModeloTablaEjemplares) tablaEjemplares.getModel();
         e=new Ejemplar(null, null, null, null);
         me.nuevoEjemplar(e);
         tablaEjemplares.setRowSelectionInterval(me.getRowCount()-1, me.getRowCount()-1);
@@ -555,11 +561,17 @@ public class VLibro extends javax.swing.JDialog {
 
     private void btnBorrarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarEjemplarActionPerformed
         // TODO add your handling code here:
-     ModeloTablaPrestamos me;
-     me=(ModeloTablaPrestamos) tablaEjemplares.getModel();
-     if (me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar()!=null)
-         ejemplaresBorrados.add(me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar());
-     me.borrarEjemplar(tablaEjemplares.getSelectedRow());
+     ModeloTablaEjemplares me;
+     me=(ModeloTablaEjemplares) tablaEjemplares.getModel();
+     if (me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar()!=null) {
+         if (fa.getPrestamosEjemplar(me.obtenerEjemplar(tablaEjemplares.getSelectedRow())).isEmpty()) {
+            ejemplaresBorrados.add(me.obtenerEjemplar(tablaEjemplares.getSelectedRow()).getNumEjemplar());
+            me.borrarEjemplar(tablaEjemplares.getSelectedRow());
+         } else {
+             fa.muestraExcepcion("No se puede borrar el ejemplar, tiene préstamos.");
+         }
+     }
+         
      if (me.getRowCount()==0) btnBorrarEjemplar.setEnabled(false);
      else tablaEjemplares.setRowSelectionInterval(0, 0);
     }//GEN-LAST:event_btnBorrarEjemplarActionPerformed
@@ -594,7 +606,7 @@ public class VLibro extends javax.swing.JDialog {
     private void btnActualizarEjemplaresLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEjemplaresLibroActionPerformed
         // TODO add your handling code here:
       java.util.List<Ejemplar> ejemplares;
-      ModeloTablaPrestamos me= (ModeloTablaPrestamos)tablaEjemplares.getModel();
+      ModeloTablaEjemplares me= (ModeloTablaEjemplares)tablaEjemplares.getModel();
       ejemplares=fa.actualizarEjemplaresLibro(idLibro, me.getFilas(), ejemplaresBorrados);
       me.setFilas(ejemplares, fa.getPrestamosActualesEjemplares(ejemplares));
       if (me.getRowCount()>0) {
@@ -603,9 +615,25 @@ public class VLibro extends javax.swing.JDialog {
         } else btnBorrarEjemplar.setEnabled(false);
     }//GEN-LAST:event_btnActualizarEjemplaresLibroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnPrestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnPrestarActionPerformed
+
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        // TODO add your handling code here:
+        ModeloTablaEjemplares me;
+     me=(ModeloTablaEjemplares) tablaEjemplares.getModel();
+        Prestamo pActual = me.getPrestamoActual(tablaEjemplares.getSelectedRow());
+        if (pActual!=null) {
+            fa.devolverPrestamo(pActual);
+            java.util.List<Ejemplar> ejemplares=fa.actualizarEjemplaresLibro(idLibro, me.getFilas(), ejemplaresBorrados);
+      me.setFilas(ejemplares, fa.getPrestamosActualesEjemplares(ejemplares));
+      if (me.getRowCount()>0) {
+            tablaEjemplares.setRowSelectionInterval(0, 0);
+            btnBorrarEjemplar.setEnabled(true);
+        } else btnBorrarEjemplar.setEnabled(false);
+     }
+    }//GEN-LAST:event_btnDevolverActionPerformed
 
     /**
     * @param args the command line arguments
@@ -619,12 +647,12 @@ public class VLibro extends javax.swing.JDialog {
     private javax.swing.JButton btnBorrarEjemplar;
     private javax.swing.JButton btnBorrarLibro;
     private javax.swing.JButton btnDerecha;
+    private javax.swing.JButton btnDevolver;
     private javax.swing.JButton btnIzquierda;
     private javax.swing.JButton btnNuevoAutor;
     private javax.swing.JButton btnNuevoEjemplar;
+    private javax.swing.JButton btnPrestar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

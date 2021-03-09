@@ -11,11 +11,11 @@ import javax.swing.table.*;
  *
  * @author basesdatos
  */
-public class ModeloTablaPrestamos extends AbstractTableModel{
+public class ModeloTablaEjemplares extends AbstractTableModel{
     private java.util.List<Ejemplar> ejemplares;
     private java.util.Map<Ejemplar, Prestamo> prestamosEjemplares;
 
-    public ModeloTablaPrestamos(){
+    public ModeloTablaEjemplares(){
         this.ejemplares=new java.util.ArrayList<Ejemplar>();
     }
 
@@ -109,6 +109,10 @@ public class ModeloTablaPrestamos extends AbstractTableModel{
 
     public java.util.List<Ejemplar> getFilas(){
         return this.ejemplares;
+    }
+    
+    public Prestamo getPrestamoActual(int row){
+        return this.prestamosEjemplares.get(ejemplares.get(row));
     }
 
     public Ejemplar obtenerEjemplar(int i){

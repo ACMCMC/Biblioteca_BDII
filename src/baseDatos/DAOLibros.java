@@ -190,7 +190,7 @@ public class DAOLibros extends AbstractDAO {
         rsEjemplares=stmEjemplares.executeQuery();
         while (rsEjemplares.next())
         {
-             resultado.add(new Ejemplar(null, rsEjemplares.getInt("num_ejemplar"),
+             resultado.add(new Ejemplar(this.consultarLibro(idLibro), rsEjemplares.getInt("num_ejemplar"),
                                                   rsEjemplares.getString("localizador"),
                                                   rsEjemplares.getString("ano_compra")));
         }
