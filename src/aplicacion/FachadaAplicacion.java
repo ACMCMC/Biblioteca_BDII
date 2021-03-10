@@ -95,6 +95,10 @@ public class FachadaAplicacion {
         return cp.obtenerPrestamos(u);
     }
     
+    public java.util.Map<Usuario, java.util.List<Prestamo>> obtenerPrestamosVencidos(java.util.List<Usuario> u){
+        return cp.obtenerPrestamosVencidos(u);
+    }
+    
     public java.util.List<Prestamo> obtenerPrestamos(int libro){
         return cp.obtenerPrestamos(cl.obtenerLibros(libro, null, null, null).get(0));
     }
@@ -141,6 +145,14 @@ public class FachadaAplicacion {
     
     public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
         return cp.getPrestamosEjemplar(ej);
+    }
+    
+    public void realizarPrestamo(Prestamo p){
+        cp.realizarPrestamo(p);
+    }
+    
+    public void nuevoPrestamo(Ejemplar ej){
+        cp.nuevoPrestamo(ej);
     }
     
 }

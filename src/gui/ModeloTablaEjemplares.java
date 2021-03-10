@@ -159,6 +159,8 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
     }
 
     public Prestamo getPrestamoActual(int row) {
+        if (row < 0) return null;
+        if (ejemplares.get(row)== null) return null;
         return this.prestamosEjemplares.get(ejemplares.get(row));
     }
 

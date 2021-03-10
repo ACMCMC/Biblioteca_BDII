@@ -26,6 +26,14 @@ public class GestionPrestamos {
         return fbd.obtenerPrestamos(u);
     }
     
+    public java.util.Map<Usuario, java.util.List<Prestamo>> obtenerPrestamosVencidos(java.util.List<Usuario> u){
+        java.util.Map<Usuario, java.util.List<Prestamo>> res = new java.util.HashMap<Usuario, java.util.List<Prestamo>>();
+        for (Usuario usr : u) {
+            res.put(usr, fbd.obtenerPrestamosVencidos(usr));
+        }
+        return res;
+    }
+    
     public java.util.List<Prestamo> obtenerPrestamos(Libro l) {
         return fbd.obtenerPrestamos(l);
     }
@@ -44,6 +52,14 @@ public class GestionPrestamos {
     
     public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
         return fbd.getPrestamosEjemplar(ej);
+    }
+    
+    public void realizarPrestamo(Prestamo p){
+        fbd.realizarPrestamo(p);
+    }
+    
+    public void nuevoPrestamo(Ejemplar ej){
+        fgui.nuevoPrestamo(ej);
     }
 
 }

@@ -516,6 +516,7 @@
             <Component class="javax.swing.JButton" name="btnPrestar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Prestar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrestarActionPerformed"/>
@@ -525,6 +526,7 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Devolver"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDevolverActionPerformed"/>

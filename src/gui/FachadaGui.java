@@ -6,6 +6,8 @@ package gui;
 
 import aplicacion.Categoria;
 import aplicacion.Libro;
+import aplicacion.Ejemplar;
+import aplicacion.Usuario;
 
 /**
  *
@@ -62,6 +64,11 @@ public class FachadaGui {
     public void gestionCategorias() {
         VGestionCategorias vg = new VGestionCategorias(vp, true, fa);
         vg.setVisible(true);
+    }
+    
+    public void nuevoPrestamo(Ejemplar ej){
+        VPrestamos vpres = new VPrestamos(vp, true, fa, ej);
+        vpres.setVisible(true);
     }
 
 }

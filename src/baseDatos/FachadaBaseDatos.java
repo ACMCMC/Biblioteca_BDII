@@ -141,6 +141,11 @@ public class FachadaBaseDatos {
     public java.util.List<Prestamo> obtenerPrestamos(Usuario u){
         return daoPrestamos.consultarPrestamos(u, daoLibros);
     }
+    
+    public java.util.List<Prestamo> obtenerPrestamosVencidos(Usuario u){
+        return daoPrestamos.consultarPrestamosVencidos(u, daoLibros);
+    }
+    
     public java.util.List<Prestamo> obtenerPrestamos(Libro u){
         return daoPrestamos.consultarPrestamos(u, daoLibros, daoUsuarios);
     }
@@ -186,4 +191,9 @@ public class FachadaBaseDatos {
     public java.util.List<Prestamo> getPrestamosEjemplar(Ejemplar ej) {
         return daoPrestamos.getPrestamosEjemplar(ej, daoUsuarios);
     }
+    
+    public void realizarPrestamo(Prestamo p){
+        daoPrestamos.insertarPrestamo(p);
+    }
+            
 }

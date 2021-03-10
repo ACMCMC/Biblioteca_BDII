@@ -5,28 +5,28 @@
 
 package gui;
 
+import aplicacion.Usuario;
 import aplicacion.Prestamo;
-import aplicacion.Ejemplar;
 import javax.swing.table.*;
 
 /**
  *
  * @author basesdatos
  */
-public class ModeloTablaEjemplares extends AbstractTableModel {
-    private java.util.List<Ejemplar> ejemplares;
-    private java.util.Map<Ejemplar, Prestamo> prestamosEjemplares;
+public class ModeloTablaPrestamos extends AbstractTableModel {
+    private java.util.List<Usuario> usuarios;
+    private java.util.Map<Usuario, java.util.List<Prestamo>> prestamosVencidos;
 
-    public ModeloTablaEjemplares() {
-        this.ejemplares = new java.util.ArrayList<Ejemplar>();
+    public ModeloTablaPrestamos() {
+        this.usuarios = new java.util.ArrayList<Usuario>();
     }
 
     public int getColumnCount() {
-        return 6;
+        return 4;
     }
 
     public int getRowCount() {
-        return ejemplares.size();
+        return usuarios.size();
     }
 
     @Override
@@ -38,19 +38,13 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
             nombre = "Id";
             break;
         case 1:
-            nombre = "Localizador";
+            nombre = "Nombre";
             break;
         case 2:
-            nombre = "Año de compra";
+            nombre = "Email";
             break;
         case 3:
-            nombre = "Usuario";
-            break;
-        case 4:
-            nombre = "Fecha de préstamo";
-            break;
-        case 5:
-            nombre = "Fecha de vencimiento";
+            nombre = "Prestamos vencidos";
             break;
         }
         return nombre;
@@ -62,7 +56,7 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
 
         switch (col) {
         case 0:
-            clase = java.lang.Integer.class;
+            clase = java.lang.String.class;
             break;
         case 1:
             clase = java.lang.String.class;
@@ -71,13 +65,7 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
             clase = java.lang.String.class;
             break;
         case 3:
-            clase = aplicacion.Usuario.class;
-            break;
-        case 4:
-            clase = java.sql.Date.class;
-            break;
-        case 5:
-            clase = java.sql.Date.class;
+            clase = java.lang.Integer.class;
             break;
         }
         return clase;
@@ -93,49 +81,24 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
 
         switch (col) {
         case 0:
-            resultado = ejemplares.get(row).getNumEjemplar();
+            resultado = usuarios.get(row).getIdUsuario();
             break;
         case 1:
-            resultado = ejemplares.get(row).getLocalizador();
+            resultado = usuarios.get(row).getNombre();
             break;
         case 2:
-            resultado = ejemplares.get(row).getAnoCompra();
+            resultado = usuarios.get(row).getEmail();
             break;
         case 3:
-            resultado = prestamosEjemplares.get(ejemplares.get(row)) != null
-                    ? prestamosEjemplares.get(ejemplares.get(row)).getUsuario()
-                    : null;
-            break;
-        case 4:
-            resultado = prestamosEjemplares.get(ejemplares.get(row)) != null
-                    ? prestamosEjemplares.get(ejemplares.get(row)).getFechaPrestamo()
-                    : null;
-            break;
-        case 5:
-            resultado = prestamosEjemplares.get(ejemplares.get(row)) != null
-                    ? prestamosEjemplares.get(ejemplares.get(row)).getFechaVencimiento()
-                    : null;
+            resultado = prestamosVencidos.get(usuarios.get(row)).size();
             break;
         }
         return resultado;
     }
 
-    @Override
-    public void setValueAt(Object v, int row, int col) {
-        switch (col) {
-        case 1:
-            ejemplares.get(row).setLocalizador((String) v);
-            break;
-        case 2:
-            ejemplares.get(row).setAnoCompra((String) v);
-            break;
-        }
-    }
-
-    public void setFilas(java.util.List<Ejemplar> ejemplares,
-            java.util.Map<Ejemplar, Prestamo> prestamosActualesEjemplares) {
-        this.ejemplares = ejemplares;
-        this.prestamosEjemplares = prestamosActualesEjemplares;
+    public void setFilas(java.util.List<Usuario> usrs, java.util.Map<Usuario, java.util.List<Prestamo>> prests) {
+        this.usuarios = usrs;
+        this.prestamosVencidos = prests;
         fireTableDataChanged();
     }
 
@@ -144,25 +107,11 @@ public class ModeloTablaEjemplares extends AbstractTableModel {
         super.fireTableDataChanged(); // To change body of generated methods, choose Tools | Templates.
     }
 
-    public void nuevoEjemplar(Ejemplar e) {
-        this.ejemplares.add(e);
-        fireTableRowsInserted(this.ejemplares.size() - 1, this.ejemplares.size() - 1);
+    public java.util.List<Usuario> getFilas() {
+        return this.usuarios;
     }
 
-    public void borrarEjemplar(int indice) {
-        this.ejemplares.remove(indice);
-        fireTableRowsDeleted(indice, indice);
-    }
-
-    public java.util.List<Ejemplar> getFilas() {
-        return this.ejemplares;
-    }
-
-    public Prestamo getPrestamoActual(int row) {
-        return this.prestamosEjemplares.get(ejemplares.get(row));
-    }
-
-    public Ejemplar obtenerEjemplar(int i) {
-        return this.ejemplares.get(i);
+    public Usuario obtenerUsuario(int i) {
+        return this.usuarios.get(i);
     }
 }

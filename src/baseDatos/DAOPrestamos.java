@@ -51,6 +51,32 @@ public class DAOPrestamos extends AbstractDAO {
         return resultado;
     }
     
+    public List<Prestamo> consultarPrestamosVencidos(Usuario u, DAOLibros daoLibros) {
+        Connection con = getConexion();
+        PreparedStatement stat = null;
+        List<Prestamo> resultado = new ArrayList<Prestamo>();
+
+        try {
+            stat = con.prepareStatement(
+                    "select prestamo.fecha_prestamo, prestamo.fecha_devolucion, public.get_fecha_vencimiento(prestamo.fecha_prestamo), prestamo.ejemplar, prestamo.libro FROM prestamo WHERE prestamo.usuario=? and prestamo.fecha_devolucion is not null and public.get_fecha_vencimiento(prestamo.fecha_prestamo) < prestamo.fecha_devolucion");
+                    stat.setString(1, u.getIdUsuario());
+            ResultSet res = stat.executeQuery();
+            while (res.next()) {
+                resultado.add(new Prestamo(res.getDate(1), res.getDate(2), res.getDate(3), daoLibros.consultarEjemplar(res.getInt(4), res.getInt(5)), u));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                stat.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return resultado;
+    }
+    
     public List<Prestamo> consultarPrestamos(Libro l, DAOLibros daoLibros, DAOUsuarios daoUsuarios) {
         Connection con = getConexion();
         PreparedStatement stat = null;
